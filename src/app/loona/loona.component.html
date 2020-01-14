@@ -1,0 +1,30 @@
+<div class="container">
+    <mdb-card *ngIf="loonaOnline; else loonaOffline">
+        <mdb-card-body>
+            <mdb-card-body>
+                <button *ngIf="app.localStorageItem('paw-role') == 'Admin'"
+                        mdbBtn
+                        class="button"
+                        type="button"
+                        color="danger"
+                        (click)="disconnectLoona()">
+                    Disconnect
+                </button>
+            </mdb-card-body>
+        </mdb-card-body>
+    </mdb-card>
+    <ng-template #loonaOffline>
+        <mdb-card>
+            <mdb-card-body>
+                <button *ngIf="app.localStorageItem('paw-role') == 'Admin'"
+                        mdbBtn
+                        class="button"
+                        type="button"
+                        color="success"
+                        (click)="connectLoona()">
+                    Connect
+                </button>
+            </mdb-card-body>
+        </mdb-card>
+    </ng-template>
+</div>

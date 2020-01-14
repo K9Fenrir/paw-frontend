@@ -1,0 +1,54 @@
+<div *ngIf="tag" class="container">
+    <div class="row mt-4">
+                <mdb-card-header class="text-center"><h2><b>Tag info</b></h2></mdb-card-header>
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <h4><i class="fas fa-paw"></i> Name</h4>
+                        </td>
+                        <td>
+                            <h4>{{ tag.name }}</h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4><i class="fas fa-genderless"></i> Type:</h4>
+                        </td>
+                        <td>
+                            <h4>{{ tag.type }}</h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4><i class="fas fa-tags"></i>  Number of posts</h4>
+                        </td>
+                        <td>
+                            <h4>{{ tag.noTaggedPosts }}</h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4><i class="fas fa-info-circle"></i> Description:</h4>
+                        </td>
+                        <td>
+                            <h4>{{ tag.description }}</h4>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button *ngIf="app.localStorageItem('paw-currentUser')"
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="deleteTag(tag.name)"
+                >
+                    Delete tag
+                </button>
+    </div>
+</div>

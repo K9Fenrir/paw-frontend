@@ -1,0 +1,62 @@
+<div class="row m-2">
+
+    <!-- Search from -->
+    <div *ngIf="tagQueryParams" class="container mt-2 col-lg-3 col-sm-12">
+        <form (ngSubmit)="submitForm()" class="text-center border border-light p-5">
+
+            <p class="h4 mb-4">User search</p>
+
+            <!-- Pattern -->
+            <label for="Pattern">Username:</label>
+            <input [(ngModel)]="tagQueryParams.pattern" name="pattern" type="text" id="Pattern" class="form-control mb-4" placeholder="Username">
+
+            <!-- SortValue -->
+            <label for="SortValue">Sort value:</label>
+            <select [(ngModel)]="tagQueryParams.sortValue" name="sortValue" class="browser-default custom-select" id="SortValue">
+                <option value="username">Username</option>
+                <option value="noPosts">Number of Posts</option>
+                <option value="noFavs">Number of Favourites</option>
+            </select>
+            <label for="sortOrder">Sort order:</label>
+            <select [(ngModel)]="tagQueryParams.sortOrder" name="sortValue" class="browser-default custom-select md-selected" id="SortOrder">
+                <option value="ASC">Ascending</option>
+                <option value="DESC">Descending</option>
+            </select>
+
+            <!-- Search button -->
+            <button class="btn btn-dark btn-block my-4" type="submit">Search</button>
+            <button *ngIf="app.localStorageItem('currentUser')" type="button" class="btn btn-info" (click)="createTag()"><i class="fas fa-plus"> New tag</i></button>
+        </form>
+
+    </div>
+
+    <!-- Result table -->
+    <div class="container mt-2 col-lg-9 col-sm-12">
+        <table class="table table-striped table-fixed">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Number of posts</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tag of tagList; index as i">
+                    <th scope="row">{{ (page-1)*pageSize + i + 1 }}</th>
+                    <td><a href="tags/view/{{tag.name}}">{{ tag.name }}</a></td>
+                    <td>{{ tag.noTaggedPosts }}</td>
+                    <td>{{ tag.type }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <ngb-pagination
+                [collectionSize]="totalSize"
+                [(page)]="page"
+                [(pageSize)]="pageSize"
+                [rotate]="true"
+                [boundaryLinks]="true"
+                (pageChange)="onPageChange()">
+        </ngb-pagination>
+    </div>
+</div>

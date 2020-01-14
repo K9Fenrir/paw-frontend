@@ -1,0 +1,100 @@
+<div class="row m-2">
+
+    <!-- Search from -->
+    <div *ngIf="userQueryParams" class="container mt-2 col-lg-3 col-sm-12">
+        <form (ngSubmit)="submitForm()" class="text-center border border-light p-5">
+
+            <p class="h4 mb-4">User search</p>
+
+            <!-- Pattern -->
+            <label for="Pattern">Username:</label>
+            <input [(ngModel)]="userQueryParams.pattern" name="pattern" type="text" id="Pattern" class="form-control mb-4" placeholder="Username">
+
+            <!-- SortValue -->
+            <label for="SortValue">Sort value:</label>
+            <select [(ngModel)]="userQueryParams.sortValue" name="sortValue" class="browser-default custom-select" id="SortValue">
+                <option value="username">Username</option>
+                <option value="noPosts">Number of Posts</option>
+                <option value="noFavs">Number of Favourites</option>
+            </select>
+            <label for="sortOrder">Sort order:</label>
+            <select [(ngModel)]="userQueryParams.sortOrder" name="sortValue" class="browser-default custom-select md-selected" id="SortOrder">
+                <option value="ASC">Ascending</option>
+                <option value="DESC">Descending</option>
+            </select>
+
+            <!-- Search button -->
+            <button class="btn btn-dark btn-block my-4" type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Result table -->
+    <div class="container mt-2 col-lg-9 col-sm-12">
+        <table class="table table-striped table-fixed">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Number of posts</th>
+                <th scope="col">Number of favourites</th>
+                <th scope="col">Role</th>
+                <th *ngIf="app.localStorageItem('paw-role') == 'Admin'">
+                    Admin Commands:
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of userList; index as i">
+                    <th scope="row">{{ (page-1)*pageSize + i + 1 }}</th>
+                    <td><a href="users/{{user.username}}">{{ user.username }}</a></td>
+                    <td>{{ user.noPosts }}</td>
+                    <td>{{ user.noFavs }}</td>
+                    <td>{{ user.admin ? "Admin" : "User"  }}</td>
+                    <td *ngIf="app.localStorageItem('paw-role') == 'Admin'  && app.localStorageItem('paw-currentUser') !== user.username; else currentUser">
+                        <button *ngIf="!user.admin"
+                                mdbBtn
+                                class="paw-userlist-button"
+                                type="button"
+                                color="danger"
+                                mdbWavesEffect
+                                (click)="adminDelete(user.username)">
+                            Delete
+                        </button>
+                        <button *ngIf="user.admin; else demoteButton"
+                                mdbBtn
+                                class="paw-userlist-button"
+                                type="button"
+                                color="warning"
+                                mdbWavesEffect
+                                (click)="adminDemote(user.username)">
+                            Demote
+                        </button>
+                        <ng-template #demoteButton>
+                            <button
+                                    mdbBtn
+                                    class="paw-userlist-button"
+                                    type="button"
+                                    color="info"
+                                    mdbWavesEffect
+                                    (click)="adminPromote(user.username)">
+                                Promote
+                            </button>
+                        </ng-template>
+                    </td>
+                    <ng-template #currentUser>
+                        <td>
+                        </td>
+                    </ng-template>
+                </tr>
+            </tbody>
+        </table>
+        <ngb-pagination
+                [collectionSize]="totalSize"
+                [(page)]="page"
+                [(pageSize)]="pageSize"
+                [rotate]="true"
+                [boundaryLinks]="true"
+                (pageChange)="onPageChange()">
+        </ngb-pagination>
+    </div>
+</div>

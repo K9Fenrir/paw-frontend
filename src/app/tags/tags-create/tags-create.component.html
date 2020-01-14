@@ -1,0 +1,30 @@
+<div *ngIf="app.localStorageItem('paw-currentUser')" class="container">
+    <div *ngIf="tagCreate" class="container mt-2">
+        <form (ngSubmit)="submitForm()" class="text-center border border-light p-5 needs-validation">
+
+            <p class="h4 mb-4">Create tag</p>
+
+            <div class="form-group">
+                <label for="TagName">Tag name:</label>
+                <input [(ngModel)]="tagCreate.name" name="pattern" type="text" id="TagName" class="form-control mb-4" placeholder="Tag name" required>
+            </div>
+            <div class="form-group">
+                <label for="Description">Description:</label>
+                <textarea [(ngModel)]="tagCreate.description" name="description" class="form-control" id="Description" placeholder="Description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="Type">Tag type</label>
+                <select [(ngModel)]="tagCreate.type" name="type" class="form-control custom-select" id="Type" required>
+                    <option value="artist">Artist</option>
+                    <option value="character">Character</option>
+                    <option value="species">Species</option>
+                    <option value="general">General</option>
+                </select>
+            </div>
+
+            <!-- Create button -->
+            <button class="btn btn-dark btn-block my-4" type="submit">Create</button>
+        </form>
+
+    </div>
+</div>

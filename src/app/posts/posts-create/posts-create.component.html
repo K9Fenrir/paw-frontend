@@ -1,0 +1,34 @@
+<div *ngIf="app.localStorageItem('paw-currentUser')" class="container">
+    <div *ngIf="postCreate" class="container mt-2">
+        <form (ngSubmit)="submitForm()" class="text-center border border-light p-5 needs-validation">
+
+            <p class="h4 mb-4">Upload post</p>
+
+            <div class="form-group">
+                <label for="Image">Image</label>
+                <input [(ngModel)]="postCreate.file" type="file" name="image" id="Image" class="form-control mb-4" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Description">Tags</label>
+                <textarea [(ngModel)]="postCreate.tagNames" name="tagNames" id="TagNames" class="form-control mb-4" placeholder="Tag1 Tag2 Tag3..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="Description">Description:</label>
+                <textarea [(ngModel)]="postCreate.description" name="description" class="form-control" id="Description" placeholder="Description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="Rating">Rating</label>
+                <select [(ngModel)]="postCreate.rating" name="rating" class="form-control custom-select" id="Rating" required>
+                    <option value="Safe">Artist</option>
+                    <option value="Questionable">Character</option>
+                    <option value="Explicit">Species</option>
+                </select>
+            </div>
+
+            <!-- Create button -->
+            <button class="btn btn-dark btn-block my-4" type="submit">Upload</button>
+        </form>
+
+    </div>
+</div>
